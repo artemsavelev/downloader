@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TaskFile {
@@ -19,8 +20,10 @@ public class TaskFile {
             String[] strings = Files.readAllLines(Paths.get(fileName)).toArray(new String[]{});
 
             for (String s : strings) {
-                String[] str = s.split(" ");
-                listOfTasks.add(new ListOfTask(str[0], str[1]));
+                if (!s.isEmpty()) {
+                    String[] str = s.split(" ");
+                    listOfTasks.add(new ListOfTask(str[0], str[1]));
+                }
             }
 
         } catch (IOException e) {
