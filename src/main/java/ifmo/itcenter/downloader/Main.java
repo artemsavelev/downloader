@@ -1,11 +1,9 @@
 package ifmo.itcenter.downloader;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
@@ -87,10 +85,8 @@ public class Main {
     private static void printResult(int count, int totalSize, int totalTime, int avgSpeed) {
         System.out.println("__________________________________________________________________________________\n");
         System.out.println("Загружено: " + count + " файлов, " + totalSize);
-        System.out.println("Время: ");
+        System.out.println("Время: " + totalTime);
         System.out.println("Средняя скорость: " + avgSpeed + "\n");
     }
-
-
 }
 

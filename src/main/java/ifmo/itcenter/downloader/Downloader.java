@@ -6,8 +6,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.Semaphore;
 
 public class Downloader extends Thread {
@@ -138,6 +136,4 @@ public class Downloader extends Thread {
                 return three;
         }
     }
-
-
 }
