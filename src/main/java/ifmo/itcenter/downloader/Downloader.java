@@ -1,5 +1,6 @@
 package ifmo.itcenter.downloader;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -13,16 +14,17 @@ public class Downloader extends Thread {
     private Semaphore sem;
     private String url;
     private String fileName;
+    private String path;
     private long fileSize;
     private long resultTime;
     private boolean full = false;
 
-    public Downloader(Semaphore sem, String url, String fileName) {
+    public Downloader(Semaphore sem, String url, String fileName, String path) {
         this.sem = sem;
         this.url = url;
         this.fileName = fileName;
+        this.path = path;
     }
-
 
     @Override
     public void run() {
@@ -42,10 +44,10 @@ public class Downloader extends Thread {
 
                 // поток для скачивания
                 ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
-                System.out.printf("Загружается файл: %s размер %s\n", fileName, getFileSize());
+                System.out.printf("Загружается файл: %s размер %s\n", fileName, getFileSize(fileSize));
 
                 // сохраняем на диск
-                FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+                FileOutputStream fileOutputStream = new FileOutputStream(path + File.separator + fileName);
                 fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
                 fileOutputStream.close();
 
@@ -53,8 +55,7 @@ public class Downloader extends Thread {
                 resultTime = end - start;
                 double speed = ((fileSize * 8) / (resultTime / 1000d)) / 1000;
 
-
-                System.out.printf("Файл: %s загружен размер %s за %s на скорости %.1f kB/s\n", fileName, getFileSize(), getResultTime(), speed);
+                System.out.printf("Файл: %s загружен размер %s за %s на скорости %.1f kB/s\n", fileName, getFileSize(fileSize), getResultTime(), speed);
 
                 full = true;
                 sem.release();
@@ -68,12 +69,13 @@ public class Downloader extends Thread {
         }
     }
 
-    private String getFileSize() {
+    public String getFileSize(long fileSize) {
 
         if (fileSize < 1024) {
             return fileSize + " B";
         }
         int z = (63 - Long.numberOfLeadingZeros(fileSize)) / 10;
+
         return String.format("%.1f %sB", (double) fileSize / (1L << (z * 10)), " KMGTPE".charAt(z));
     }
 

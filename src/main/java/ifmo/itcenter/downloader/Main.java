@@ -1,10 +1,10 @@
 package ifmo.itcenter.downloader;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Semaphore;
 
 public class Main {
@@ -17,21 +17,26 @@ public class Main {
             "  Пример вызова:\n" +
             "  java -jar utility.jar 5 output_folder links.txt\n";
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
 
         int numberOfFlows;
         String nameOfDir;
         String linkOfList;
-        Path dir = Paths.get(args[1]);
-        Path file = Paths.get(args[2]);
+        File dir;
+        File file;
+
 
         if (args.length != 3) {
             System.out.println(MESSAGE);
             return;
         } else {
-            numberOfFlows = Integer.parseInt(args[0]);
 
-            if (!Files.isDirectory(dir)) {
+            numberOfFlows = Integer.parseInt(args[0]);
+            dir = new File(args[1]);
+            file = new File(args[2]);
+
+            if (dir.isDirectory()) {
                 nameOfDir = dir.toString();
             } else {
                 System.out.println("Переданный параметр " +
@@ -40,7 +45,7 @@ public class Main {
                 return;
             }
 
-            if (Files.isRegularFile(file)) {
+            if (file.isFile()) {
                 linkOfList = file.toString();
             } else {
                 System.out.println("Переданный параметр " +
@@ -48,11 +53,8 @@ public class Main {
                         "не является файлом, проверте правильность ввода");
                 return;
             }
-        }
 
-//        numberOfFlows = 2;
-//        nameOfDir = "";
-//        linkOfList = "/mnt/sdb/java/links.txt";
+        }
 
         Semaphore sem = new Semaphore(numberOfFlows);
         Downloader downloader = null;
@@ -65,7 +67,7 @@ public class Main {
             ListOfTask listOfTask = taskFile.getListOfTasks().get(i);
             System.out.println("Из " + listOfTask.getUrl() + " в файл " + listOfTask.getFileName());
 
-            downloader = new Downloader(sem, listOfTask.getUrl(), listOfTask.getFileName());
+            downloader = new Downloader(sem, listOfTask.getUrl(), listOfTask.getFileName(), nameOfDir);
             downloader.start();
             threads.add(downloader);
         }
@@ -78,15 +80,32 @@ public class Main {
             }
         }
 
-        printResult(taskFile.getListOfTasks().size(), 0, 0, 0);
+        long size = 0;
+        int count;
+        String totalSize;
 
-    }
+        if (file.length() != 0) {
 
-    private static void printResult(int count, int totalSize, int totalTime, int avgSpeed) {
-        System.out.println("__________________________________________________________________________________\n");
+            for (File files : dir.listFiles()) {
+                size += files.length();
+            }
+
+            count = Objects.requireNonNull(dir.listFiles()).length;
+            totalSize = downloader.getFileSize(size);
+
+        } else {
+
+            System.out.println("Список заданий в файле " +
+                    "\"" + file.toString() + "\" " +
+                    "пуст, проверьте правильность заполнения файла");
+            return;
+        }
+
+        System.out.println("___________________________________\n");
         System.out.println("Загружено: " + count + " файлов, " + totalSize);
-        System.out.println("Время: " + totalTime);
-        System.out.println("Средняя скорость: " + avgSpeed + "\n");
+        System.out.println("Время: " + 0);
+        System.out.println("Средняя скорость: " + 0 + "\n");
+
     }
 }
 

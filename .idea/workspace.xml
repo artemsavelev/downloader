@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Downloader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/TaskFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/TaskFile.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +50,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Test">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ifmo.itcenter.downloader.Main" />
       <module name="downloader" />
@@ -80,8 +79,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Test" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -102,6 +101,7 @@
       <workItem from="1573336097481" duration="10546000" />
       <workItem from="1573403156933" duration="27496000" />
       <workItem from="1573664559233" duration="18754000" />
+      <workItem from="1573715392105" duration="20680000" />
     </task>
     <servers />
   </component>
@@ -120,5 +120,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Test.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
