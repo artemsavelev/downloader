@@ -44,7 +44,7 @@ public class Downloader extends Thread {
 
                 // поток для скачивания
                 ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
-                System.out.printf("Загружается файл: %s размер %s\n", fileName, getFileSize(fileSize));
+                System.out.printf("Загружается файл: %s размер %s\n", fileName, Converter.getFileSize(fileSize));
 
                 // сохраняем на диск
                 FileOutputStream fileOutputStream = new FileOutputStream(path + File.separator + fileName);
@@ -55,7 +55,8 @@ public class Downloader extends Thread {
                 resultTime = end - start;
                 double speed = ((fileSize * 8) / (resultTime / 1000d)) / 1000;
 
-                System.out.printf("Файл: %s загружен размер %s за %s на скорости %.1f kB/s\n", fileName, getFileSize(fileSize), getResultTime(), speed);
+                System.out.printf("Файл: %s загружен размер %s за %s на скорости %.1f kB/s\n",
+                        fileName, Converter.getFileSize(fileSize), TimeUtils.getResultTime(resultTime), speed);
 
                 full = true;
                 sem.release();
@@ -69,73 +70,6 @@ public class Downloader extends Thread {
         }
     }
 
-    public String getFileSize(long fileSize) {
 
-        if (fileSize < 1024) {
-            return fileSize + " B";
-        }
-        int z = (63 - Long.numberOfLeadingZeros(fileSize)) / 10;
 
-        return String.format("%.1f %sB", (double) fileSize / (1L << (z * 10)), " KMGTPE".charAt(z));
-    }
-
-    public String getResultTime() {
-
-        double seconds = (double) resultTime / 1000;
-        int s = (int) seconds % 60;
-        int minutes = (int) seconds / 60;
-
-        if (minutes == 0) {
-            return String.format("%.3f %s", seconds, morpher((int) seconds, "s"));
-        }
-
-        return String.format("%2d %s %2d %s", minutes, morpher(minutes, "m"), s, morpher(s, "s"));
-    }
-
-    private String morpher(int count, String type) {
-        String one = "";
-        String two = "";
-        String three = "";
-
-        if (type.equals("m")) {
-
-            one = "минуту";
-            two = "минуты";
-            three = "минут";
-        }
-
-        if (type.equals("s")) {
-
-            one = "секунду";
-            two = "секунды";
-            three = "секунд";
-        }
-
-        switch (count) {
-            case 1:
-            case 21:
-            case 31:
-            case 41:
-            case 51:
-                return one;
-            case 2:
-            case 3:
-            case 4:
-            case 22:
-            case 23:
-            case 24:
-            case 32:
-            case 33:
-            case 34:
-            case 42:
-            case 43:
-            case 44:
-            case 52:
-            case 53:
-            case 54:
-                return two;
-            default:
-                return three;
-        }
-    }
 }

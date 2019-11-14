@@ -57,11 +57,12 @@ public class Main {
         }
 
         Semaphore sem = new Semaphore(numberOfFlows);
-        Downloader downloader = null;
+        Downloader downloader;
         TaskFile taskFile = new TaskFile(linkOfList);
         List<Thread> threads = new ArrayList<>();
 
         System.out.println("Получены задания на загрузку:");
+        long start = System.currentTimeMillis();
 
         for (int i = 0; i < taskFile.getListOfTasks().size(); i++) {
             ListOfTask listOfTask = taskFile.getListOfTasks().get(i);
@@ -79,6 +80,8 @@ public class Main {
                 e.printStackTrace();
             }
         }
+        long end = System.currentTimeMillis();
+        long resultTime = end - start;
 
         long size = 0;
         int count;
@@ -91,7 +94,7 @@ public class Main {
             }
 
             count = Objects.requireNonNull(dir.listFiles()).length;
-            totalSize = downloader.getFileSize(size);
+            totalSize = Converter.getFileSize(size);
 
         } else {
 
@@ -103,7 +106,7 @@ public class Main {
 
         System.out.println("___________________________________\n");
         System.out.println("Загружено: " + count + " файлов, " + totalSize);
-        System.out.println("Время: " + 0);
+        System.out.println("Время: " + TimeUtils.getResultTime(resultTime));
         System.out.println("Средняя скорость: " + 0 + "\n");
 
     }
