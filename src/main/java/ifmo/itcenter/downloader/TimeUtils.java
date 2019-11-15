@@ -9,10 +9,10 @@ public class TimeUtils {
         int minutes = (int) seconds / 60;
 
         if (minutes == 0) {
-            return String.format("%.3f %s", seconds, TimeUtils.morpher((int) seconds, "s"));
+            return String.format("%.3f %s", seconds, morpher((int) seconds, "s"));
         }
 
-        return String.format("%2d %s %2d %s", minutes, TimeUtils.morpher(minutes, "m"), s, TimeUtils.morpher(s, "s"));
+        return String.format("%2d %s %2d %s", minutes, morpher(minutes, "m"), s, morpher(s, "s"));
     }
 
     private static String morpher(int count, String type) {

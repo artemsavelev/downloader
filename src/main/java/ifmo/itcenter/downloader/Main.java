@@ -1,10 +1,10 @@
 package ifmo.itcenter.downloader;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
 public class Main {
@@ -18,7 +18,7 @@ public class Main {
             "  java -jar utility.jar 5 output_folder links.txt\n";
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         int numberOfFlows;
         String nameOfDir;
@@ -36,13 +36,33 @@ public class Main {
             dir = new File(args[1]);
             file = new File(args[2]);
 
-            if (dir.isDirectory()) {
+            if (dir.exists()) {
                 nameOfDir = dir.toString();
             } else {
-                System.out.println("Переданный параметр " +
+
+                System.out.println("Папка " +
                         "\"" + dir.toString() + "\" " +
-                        "не является папкой, проверте правильность ввода");
-                return;
+                        "не создана, создать? (y/n)");
+
+                Scanner scanner = new Scanner(System.in);
+                String answer = scanner.nextLine();
+
+                if (answer.equals("y")) {
+                    dir.mkdirs();
+                } else {
+                    System.out.println("Bye!");
+                    return;
+                }
+
+                if (dir.isDirectory()) {
+                    nameOfDir = dir.toString();
+                } else {
+                    System.out.println("Переданный параметр " +
+                            "\"" + dir.toString() + "\" " +
+                            "не является папкой, проверте правильность ввода");
+                    return;
+                }
+
             }
 
             if (file.isFile()) {
@@ -89,7 +109,7 @@ public class Main {
 
         if (file.length() != 0) {
 
-            for (File files : dir.listFiles()) {
+            for (File files : Objects.requireNonNull(dir.listFiles())) {
                 size += files.length();
             }
 

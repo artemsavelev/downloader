@@ -15,8 +15,6 @@ public class Downloader extends Thread {
     private String url;
     private String fileName;
     private String path;
-    private long fileSize;
-    private long resultTime;
     private boolean full = false;
 
     public Downloader(Semaphore sem, String url, String fileName, String path) {
@@ -40,7 +38,7 @@ public class Downloader extends Thread {
 
                 // узнаем количество байт в файле
                 HttpURLConnection urlFileSize = (HttpURLConnection) url.openConnection();
-                fileSize = urlFileSize.getContentLengthLong();
+                long fileSize = urlFileSize.getContentLengthLong();
 
                 // поток для скачивания
                 ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
@@ -52,7 +50,7 @@ public class Downloader extends Thread {
                 fileOutputStream.close();
 
                 long end = System.currentTimeMillis();
-                resultTime = end - start;
+                long resultTime = end - start;
                 double speed = ((fileSize * 8) / (resultTime / 1000d)) / 1000;
 
                 System.out.printf("Файл: %s загружен размер %s за %s на скорости %.1f kB/s\n",
@@ -69,7 +67,4 @@ public class Downloader extends Thread {
             e.printStackTrace();
         }
     }
-
-
-
 }
