@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a0249da-01d2-4221-b6ec-fe35e0d23fe0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/FileUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/InputParam.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/NetUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Downloader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/TimeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/TimeUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/TaskFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/TaskFile.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,11 +36,18 @@
   <component name="ProjectId" id="1THoRQwrZvNw75vDGL4KWqe5waV" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/target" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -55,6 +65,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ifmo.itcenter.downloader.Main" />
       <module name="downloader" />
+      <option name="PROGRAM_PARAMETERS" value="3 target/new_folder $PROJECT_DIR$/../links.txt" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="ifmo.itcenter.downloader.*" />
@@ -78,10 +89,72 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ifmo.itcenter.downloader.Test3" />
+      <module name="downloader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ifmo.itcenter.downloader.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tst2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ifmo.itcenter.downloader.Tst2" />
+      <module name="downloader" />
+      <option name="PROGRAM_PARAMETERS" value="2 new_folder $PROJECT_DIR$/../links.txt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ifmo.itcenter.downloader.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="downloader [install]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="install" />
+              </list>
+            </option>
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Test" />
+      <item itemvalue="Application.Tst2" />
+      <item itemvalue="Application.Test3" />
+      <item itemvalue="Maven.downloader [install]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Test3" />
+        <item itemvalue="Application.Tst2" />
         <item itemvalue="Application.Test" />
+        <item itemvalue="Maven.downloader [install]" />
       </list>
     </recent_temporary>
   </component>
@@ -101,10 +174,11 @@
       <workItem from="1573291253760" duration="11880000" />
       <workItem from="1573336097481" duration="10546000" />
       <workItem from="1573403156933" duration="27496000" />
-      <workItem from="1573664559233" duration="18754000" />
-      <workItem from="1573715392105" duration="23174000" />
-      <workItem from="1573800179950" duration="64000" />
-      <workItem from="1573802097773" duration="6239000" />
+      <workItem from="1573664559233" duration="34996000" />
+      <workItem from="1574518276772" duration="1350000" />
+      <workItem from="1574520223999" duration="1664000" />
+      <workItem from="1574522238791" duration="27170000" />
+      <workItem from="1574590620550" duration="11485000" />
     </task>
     <servers />
   </component>

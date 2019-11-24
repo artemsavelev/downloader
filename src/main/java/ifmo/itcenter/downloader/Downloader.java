@@ -1,24 +1,24 @@
 package ifmo.itcenter.downloader;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.util.concurrent.Semaphore;
 
 public class Downloader extends Thread {
 
-    private Semaphore sem;
+    private Semaphore semaphore;
     private String url;
     private String fileName;
     private String path;
     private boolean full = false;
+    private static long totalSize;
+    private static double avgSpeed;
+    private static int count;
+    private static long totalTime;
 
-    public Downloader(Semaphore sem, String url, String fileName, String path) {
-        this.sem = sem;
+
+    public Downloader(Semaphore semaphore, String url, String fileName, String path) {
+        this.semaphore = semaphore;
         this.url = url;
         this.fileName = fileName;
         this.path = path;
@@ -30,41 +30,51 @@ public class Downloader extends Thread {
             // если еще не скачал
             if (!full) {
                 //Запрашиваем у семафора разрешение на выполнение
-                sem.acquire();
+                semaphore.acquire();
+
+                URL url = new URL(this.url);
+                NetUtils netUtils = new NetUtils(url);
+                FileUtils fileUtils = new FileUtils(path, fileName);
 
                 long start = System.currentTimeMillis();
 
-                URL url = new URL(this.url);
-
-                // узнаем количество байт в файле
-                HttpURLConnection urlFileSize = (HttpURLConnection) url.openConnection();
-                long fileSize = urlFileSize.getContentLengthLong();
-
-                // поток для скачивания
-                ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
-                System.out.printf("Загружается файл: %s размер %s\n", fileName, Converter.getFileSize(fileSize));
-
-                // сохраняем на диск
-                FileOutputStream fileOutputStream = new FileOutputStream(path + File.separator + fileName);
-                fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-                fileOutputStream.close();
+                fileUtils.saveFile(netUtils.downloadFile(fileName));
 
                 long end = System.currentTimeMillis();
                 long resultTime = end - start;
-                double speed = ((fileSize * 8) / (resultTime / 1000d)) / 1000;
+                double speed = ((netUtils.fileSize() * 8) / (resultTime / 1000d)) / 1000;
 
-                System.out.printf("Файл: %s загружен размер %s за %s на скорости %.1f kB/s\n",
-                        fileName, Converter.getFileSize(fileSize), TimeUtils.getResultTime(resultTime), speed);
+                synchronized (this) {
+                    totalSize += netUtils.fileSize();
+                    totalTime += resultTime;
+                    avgSpeed += speed;
+                    count++;
+                }
 
                 full = true;
-                sem.release();
+                semaphore.release();
+
+                System.out.printf("Файл: %s загружен размер %s за %s на скорости %.1f kB/s\n",
+                        fileName, Converter.getFileSize(netUtils.fileSize()), TimeUtils.getResultTime(resultTime), speed);
+
+                if (semaphore.availablePermits() == Main.flows) {
+                    System.out.println(output(totalTime));
+                }
 
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.out.println("Что-то пошло не так!");
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
+
+    private String output(long time) {
+
+        double avgSpeed = Downloader.avgSpeed / count;
+        System.out.println("___________________________________\n");
+
+        return String.format("Загружено: %d файлов, %s (%d) B\nВремя: %s \nСредняя скорость: %.1f kB/s\n",
+                count, Converter.getFileSize(totalSize), totalSize, TimeUtils.getResultTime(time), avgSpeed);
+    }
+
+
 }
