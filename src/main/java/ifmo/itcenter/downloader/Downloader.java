@@ -1,23 +1,25 @@
 package ifmo.itcenter.downloader;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 public class Downloader extends Thread {
 
     private Semaphore semaphore;
     private String url;
-    private String fileName;
+    private List<String> fileName;
     private String path;
     private boolean full = false;
     private static long totalSize;
-    private static double avgSpeed;
+    private static double totalSpeed;
     private static int count;
     private static long totalTime;
 
 
-    public Downloader(Semaphore semaphore, String url, String fileName, String path) {
+    public Downloader(Semaphore semaphore, String url, List<String> fileName, String path) {
         this.semaphore = semaphore;
         this.url = url;
         this.fileName = fileName;
@@ -34,11 +36,12 @@ public class Downloader extends Thread {
 
                 URL url = new URL(this.url);
                 NetUtils netUtils = new NetUtils(url);
-                FileUtils fileUtils = new FileUtils(path, fileName);
+                FileUtils fileUtils = new FileUtils(path, fileName.get(0));
 
                 long start = System.currentTimeMillis();
 
-                fileUtils.saveFile(netUtils.downloadFile(fileName));
+                fileUtils.saveFile(netUtils.downloadFile(fileName.get(0)));
+
 
                 long end = System.currentTimeMillis();
                 long resultTime = end - start;
@@ -47,7 +50,7 @@ public class Downloader extends Thread {
                 synchronized (this) {
                     totalSize += netUtils.fileSize();
                     totalTime += resultTime;
-                    avgSpeed += speed;
+                    totalSpeed += speed;
                     count++;
                 }
 
@@ -55,7 +58,13 @@ public class Downloader extends Thread {
                 semaphore.release();
 
                 System.out.printf("Файл: %s загружен размер %s за %s на скорости %.1f kB/s\n",
-                        fileName, Converter.getFileSize(netUtils.fileSize()), TimeUtils.getResultTime(resultTime), speed);
+                        fileName.get(0), Converter.getFileSize(netUtils.fileSize()), TimeUtils.getResultTime(resultTime), speed);
+
+                if (fileName.size() > 1) {
+                    for (int i = 1; i < fileName.size(); i++) {
+                        fileUtils.copyFile(new File(fileName.get(0)), new File(fileName.get(i)));
+                    }
+                }
 
                 if (semaphore.availablePermits() == Main.flows) {
                     System.out.println(output(totalTime));
@@ -69,7 +78,7 @@ public class Downloader extends Thread {
 
     private String output(long time) {
 
-        double avgSpeed = Downloader.avgSpeed / count;
+        double avgSpeed = totalSpeed / count;
         System.out.println("___________________________________\n");
 
         return String.format("Загружено: %d файлов, %s (%d) B\nВремя: %s \nСредняя скорость: %.1f kB/s\n",

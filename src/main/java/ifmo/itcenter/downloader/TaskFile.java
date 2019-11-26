@@ -10,13 +10,11 @@ import java.util.Map;
 
 public class TaskFile {
     private String fileName;
-//    private List<ListOfTask> listOfTasks;
     private Map<String, List<String>> map;
 
 
     public TaskFile(String fileName) {
         this.fileName = fileName;
-//        this.listOfTasks = new ArrayList<>();
         this.map = new HashMap<>();
 
         try {
@@ -26,7 +24,6 @@ public class TaskFile {
                 if (!s.isEmpty()) {
                     String[] str = s.split(" ");
                     map.computeIfAbsent(str[0], k -> new ArrayList<>()).add(str[1]);
-//                    listOfTasks.add(new ListOfTask(str[0], str[1]));
                 }
             }
 
@@ -35,10 +32,6 @@ public class TaskFile {
         }
 
     }
-
-//    public List<ListOfTask> getListOfTasks() {
-//        return listOfTasks;
-//    }
 
     public Map<String, List<String>> getMap() {
         return map;

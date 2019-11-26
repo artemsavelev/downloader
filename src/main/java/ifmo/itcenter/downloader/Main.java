@@ -20,31 +20,12 @@ public class Main {
         System.out.println("Получены задания на загрузку:");
 
         for (Map.Entry<String, List<String>> entry : taskFile.getMap().entrySet()) {
-            System.out.println("Из: " + entry.getKey() + " в файл: "
-                    + entry.getValue());
+            System.out.println("Из: " + entry.getKey() + " в файл: " + entry.getValue());
 
-            List<String> values = entry.getValue();
-
-            Thread thread = new Thread(
-                    new Downloader(semaphore, entry.getKey(),
-                            values.get(0), input.getDir().toString())
-            );
+            Thread thread = new Thread(new Downloader(semaphore, entry.getKey(),
+                    entry.getValue(), input.getDir().toString()));
             thread.start();
-
         }
-
-//        System.out.println("Получены задания на загрузку:");
-//        for (int i = 0; i < taskFile.getListOfTasks().size(); i++) {
-//
-//            ListOfTask listOfTask = taskFile.getListOfTasks().get(i);
-//            System.out.println("Из " + listOfTask.getUrl() + " в файл " + listOfTask.getFileName());
-//
-//            Thread thread = new Thread(
-//                    new Downloader(semaphore, listOfTask.getUrl(),
-//                            listOfTask.getFileName(), input.getDir().toString())
-//            );
-//            thread.start();
-//        }
 
     }
 }

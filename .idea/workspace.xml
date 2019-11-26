@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a0249da-01d2-4221-b6ec-fe35e0d23fe0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/FileUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/InputParam.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/NetUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/FileUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/InputParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/InputParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/ListOfTask.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/NetUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/NetUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/TaskFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ifmo/itcenter/downloader/TaskFile.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -178,7 +179,8 @@
       <workItem from="1574518276772" duration="1350000" />
       <workItem from="1574520223999" duration="1664000" />
       <workItem from="1574522238791" duration="27170000" />
-      <workItem from="1574590620550" duration="11485000" />
+      <workItem from="1574590620550" duration="17074000" />
+      <workItem from="1574759247339" duration="4867000" />
     </task>
     <servers />
   </component>

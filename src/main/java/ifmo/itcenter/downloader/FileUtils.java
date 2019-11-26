@@ -11,9 +11,6 @@ public class FileUtils {
     private String path;
     private String fileName;
 
-    public FileUtils() {
-    }
-
     public FileUtils(String path, String fileName) {
         this.path = path;
         this.fileName = fileName;
@@ -28,7 +25,14 @@ public class FileUtils {
     }
 
     public void copyFile(File source, File dest) throws IOException {
-            Files.copy(source.toPath(), dest.toPath());
+        File file1 = new File(path + File.separator + source);
+        File file2 = new File(path + File.separator + dest);
+        if (file1.exists() && !file2.exists()) {
+            Files.copy(file1.toPath(), file2.toPath());
+            System.out.println("Копируется файл: " + source + " в файл: " + dest);
+        } else {
+            System.out.println("Файлы уже существуют");
+        }
     }
 
 
